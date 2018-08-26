@@ -5,10 +5,12 @@
         <data-set-pannel v-show="current===0"></data-set-pannel>
         <charts-pannel v-show="current===1"></charts-pannel>
         <property-pannel v-show="current===2"></property-pannel>
+        <global-pannel v-show="current===3"></global-pannel>
         <ul class="tool-tab">
           <li @click="current=0" :class="{on:current===0}">数据集</li>
           <li @click="current=1" :class="{on:current===1}">图表</li>
           <li @click="current=2" :class="{on:current===2}">属性</li>
+          <li @click="current=3" :class="{on:current===3}">全局</li>
         </ul>
       </div>
   </div>
@@ -18,13 +20,15 @@ import ChartsLayout from "./chartsLayout.vue";
 import DataSetPannel from './datasetPannel.vue'
 import ChartsPannel from './chartsPannel.vue'
 import PropertyPannel from './propertyPannel.vue'
+import GlobalPannel from './globalPannel.vue'
 // import {mapState} from 'vuex'
 export default {
   components:{
     ChartsLayout,
     DataSetPannel,
     ChartsPannel,
-    PropertyPannel
+    PropertyPannel,
+    GlobalPannel
   },
 
   data(){

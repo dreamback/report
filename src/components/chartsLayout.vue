@@ -1,5 +1,5 @@
 <template>
-    <div class="charts-layout">
+    <div class="charts-layout" :style="$store.state.style.gridLayout">
         <grid-layout
             :layout="layout"
             :col-num="12"
@@ -11,6 +11,7 @@
             :margin="[10, 10]"
             :use-css-transforms="true">
                 <grid-item v-for="(el, index) in layout"
+                    :style="$store.state.style.gridItem"
                     @click.native="activeItem(el, index)"
                     @resized="resized(el.i)"
                     :key="index"
@@ -55,7 +56,9 @@ export default {
             this.$store.commit('setCurrentLayoutIndex', index)
         },
         resized(id){
-            this.$refs[`vchart_${id}`][0].echarts.resize()
+            setTimeout(_=>{
+                this.$refs[`vchart_${id}`][0].echarts.resize()
+            },100)
         }
     }
 }

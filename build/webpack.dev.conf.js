@@ -9,6 +9,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
+const fs = require('fs')
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
@@ -22,6 +23,19 @@ const devWebpackConfig = merge(baseWebpackConfig, {
 
   // these devServer options should be customized in /config/index.js
   devServer: {
+    before:function(app){
+      app.post('/static/json/**', function(req,res){
+        res.setHeader('Content-Type', 'text/json;charset=UTF-8');
+        const filename = path.join(__dirname, '..', `${req.originalUrl}`)
+        fs.exists(filename,function(exists){
+          if(exists){
+            fs.createReadStream(filename).pipe(res);
+          }else{
+            res.send(filename)
+          }
+        })
+      })
+    },
     clientLogLevel: 'warning',
     historyApiFallback: {
       rewrites: [
